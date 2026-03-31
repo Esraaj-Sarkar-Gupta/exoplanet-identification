@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{geometry}
+
+\geometry{margin=1in}
+
+\setlength{\parindent}{0pt}
+
+\title{Using Physics Informed Classical Machine Learning for the Detection of Exoplanets}
+\author{Esraaj Sarkar Gupta, Suyash Prakash, Anirudh Puri}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+
+\section{Methodology}
+We use the Kepler Object of Interest (KOI) dataset to train our model.
+
+\subsection{Transit Depth Consistency}
+Since the telescope makes 2D measurements, we assert that the stellar flux must be directly related to the area of the star that is observed. During a transit, a portion of the area of the star is blocked by the planet, leading to a decrease in the observed flux. The transit depth, which is the fractional decrease in flux during a transit, can be expressed as:
+\begin{equation}
+    \delta_\text{theoretical} = \frac{\text{Area}_\text{Planet}}{\text{Area}_\text{Star}} = \frac{\pi R_p^2}{\pi R_*^2}
+\end{equation}
+
+where $R_p$ is the radius of the planet and $R_*$ is the radius of the star. We can compare this theoretical transit depth with the observed transit depth from the light curve data to ensure consistency.
+
+\begin{equation}
+    \Delta\delta = \Bigg|\delta_{obs} - \delta_\text{theoretical}\Bigg|
+\end{equation}
+
+\subsection{Duration Consistency}
+
+
+\subsection{Impact Parameter}
+
+
+
+
+
+\end{document}
