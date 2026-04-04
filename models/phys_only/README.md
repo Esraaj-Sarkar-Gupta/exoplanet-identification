@@ -1,5 +1,9 @@
-These models were trained on only the 3 physics-aware engineered models.
+## These models were trained on only the 3 physics-aware engineered models.
+`phys_duration_residual`
+`phys_depth_residual`
+`phys_impact_parameter_squared`
 
+### SVM Results
 We see that while precision is very high (0.98), recall is very low (0.22).
 
 Classification Report:
