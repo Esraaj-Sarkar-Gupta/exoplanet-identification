@@ -145,10 +145,10 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     Rstar_by_AU_ratio = R_SUN / AU_UNIT
 
     # Theoretical Anchor
-    df["theo_duration"] = (2 * df["koi_srad"] * df["koi_period"]) / (2 * np.pi * df["phys_sma"]) * Rstar_by_AU_ratio
+    df["theo_theoretical_duration"] = (2 * df["koi_srad"] * df["koi_period"]) / (2 * np.pi * df["phys_sma"]) * Rstar_by_AU_ratio
 
     # Compute residue
-    df["phys_duration_residual"] = (df["koi_duration"] - df["theo_duration"]).abs()
+    df["phys_duration_residual"] = (df["koi_duration"] - df["theo_theoretical_duration"]).abs()
 
     """
     3) Impact Parameter Consistency
