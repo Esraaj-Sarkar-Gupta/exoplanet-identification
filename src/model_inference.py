@@ -22,8 +22,8 @@ from typing import Union
 # ---- Secure Path Resolution ---- #
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
-DEFAULT_MODEL_PATH = PROJECT_ROOT / "models" / "svm_model.joblib"
-DEFAULT_SCALER_PATH = PROJECT_ROOT / "models" / "scaler.joblib"
+DEFAULT_MODEL_PATH = PROJECT_ROOT / "models" / "phys_only" / "svm" / "model.joblib"
+DEFAULT_SCALER_PATH = PROJECT_ROOT / "models" / "phys_only" / "svm" / "scaler.joblib"
 
 
 # ---- Physics ---- #
@@ -172,18 +172,19 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def get_svm_predictions(
+def get_predictions(
         raw_data: Union[pd.DataFrame, np.ndarray], 
-        model_path: Path = DEFAULT_MODEL_PATH,
-        scaler_path: Path = DEFAULT_SCALER_PATH
+        model_path: Path,
+        scaler_path: Path
 ):
     """
-    Takes raw dataframe, calculates physics features, loads the trained SVM and scaler, 
+    Takes raw dataframe, calculates physics features, loads the trained model and scaler, 
     transforms data, and returns predictions.
     """
     
     df_engineered = engineer_physics_features(raw_data)
     
+    # Define features to be passed for testing
     features = [
         "phys_duration_residual",
         "phys_depth_residual",
@@ -194,13 +195,13 @@ def get_svm_predictions(
 
     # Load from Path
     try:
-        svm_model = joblib.load(model_path)
+        model = joblib.load(model_path)
         scaler = joblib.load(scaler_path)
     except FileNotFoundError as e:
-        raise FileNotFoundError(f"Missing model or scaler file. Ensure train_SVM.py was run first. Details: {e}")
+        raise FileNotFoundError(f"Missing model or scaler file. Ensure train_XXX.py was run first. Details: {e}")
 
     X_scaled = scaler.transform(X_features)
 
-    predictions = svm_model.predict(X_scaled)
+    predictions = model.predict(X_scaled)
     
     return predictions
