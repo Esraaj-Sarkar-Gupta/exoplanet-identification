@@ -176,7 +176,8 @@ def get_predictions(
         raw_data: Union[pd.DataFrame, np.ndarray], 
         model_path: Path,
         scaler_path: Path,
-        features : list[str]
+        features : list[str],
+        return_probs : bool = False
 ):
     """
     Takes raw dataframe, calculates physics features, loads the trained model and scaler, 
@@ -195,7 +196,10 @@ def get_predictions(
         raise FileNotFoundError(f"Missing model or scaler file. Ensure train_XXX.py was run first. Details: {e}")
 
     X_scaled = scaler.transform(X_features)
-
     predictions = model.predict(X_scaled)
+
+    if return_probs:
+        # [:, 1] grabs the probability of Class 1.0
+        return predictions, model.predict_proba(X_scaled)[:, 1]
     
-    return predictions
+    return predictions, None

@@ -10,11 +10,17 @@ Author: Esraaj Sarkar Gupta
 # ---- Imports ---- #
 import sys
 import pandas as pd
+import matplotlib.pyplot as plt
 from pathlib import Path
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import (
+    accuracy_score, 
+    classification_report, 
+    confusion_matrix, 
+    precision_recall_curve, 
+    auc
+)
 
 # ---- Secure Path Resolution for Imports ---- #
-# We must do this BEFORE importing model_inference
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 SRC_DIR = PROJECT_ROOT / "src"
@@ -22,8 +28,8 @@ SRC_DIR = PROJECT_ROOT / "src"
 sys.path.append(str(SRC_DIR))
 from model_inference import get_predictions
 
-
-def main(model_path : Path, scaler_path : Path, features : list):
+# Main
+def main(model_path : Path, scaler_path : Path, features : list, return_probs : bool):
     # ---- Secure Path Resolution ---- #
     SCRIPT_DIR = Path(__file__).resolve().parent
     PROJECT_ROOT = SCRIPT_DIR.parent
@@ -53,14 +59,15 @@ def main(model_path : Path, scaler_path : Path, features : list):
     y_test = df_test_clean["Target"]
 
     # ---- Run Inference ---- #
-    print("Running raw data through the SVM Inference Engine...")
-    # Note: get_svm_predictions handles all the physics engineering internally
+    print("Running raw data through the Inference Engine...")
+    # Note: get__predictions handles all the physics engineering internally
     try:
-        predictions = get_predictions(
+        predictions, positive_class_probabilities = get_predictions(
             raw_data=df_test_clean,
             model_path = model_path,
             scaler_path = scaler_path,
-            features = features
+            features = features,
+            return_probs = return_probs
             )
     except ValueError as e:
         print(f"Inference Error: {e}")
@@ -83,16 +90,44 @@ def main(model_path : Path, scaler_path : Path, features : list):
     print("Confusion Matrix:")
     print(confusion_matrix(y_test, predictions))
 
+    # ---- PR AUC & Graphing ---- #
+    if positive_class_probabilities is not None:
+        # 1. Calculate Precision, Recall, and the AUC metric
+        precision, recall, thresholds = precision_recall_curve(y_test, positive_class_probabilities)
+        pr_auc = auc(recall, precision)
+        
+        print(f"PR-AUC Score: {pr_auc:.4f}\n")
+        
+        # Plot the Precision-Recall Curve
+        print("Generating Precision-Recall Curve...")
+        plt.figure(figsize=(8, 6))
+        plt.plot(recall, precision, color='darkorange', lw=2, label=f'PR Curve (AUC = {pr_auc:.4f})')
+        
+        plt.xlabel('Recall (True Positive Rate)', fontsize=12)
+        plt.ylabel('Precision (Positive Predictive Value)', fontsize=12)
+        plt.title('Precision-Recall Curve: Exoplanet Classification', fontsize=14)
+        plt.legend(loc='lower left', fontsize=12)
+        plt.grid(True, linestyle='--', alpha=0.6)
+        
+        # Save
+        plot_path = DIR_PATH / "pr_curve.png"
+        
+        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
+        print(f"Plot saved successfully to: {plot_path}")
+
 if __name__ == "__main__":
-    MODEL_PATH : Path   = Path(PROJECT_ROOT / "models" / "phys_plus_theo" / "SVM" / "model.joblib")
-    SCALER_PATH : Path  = Path(PROJECT_ROOT / "models" / "phys_plus_theo" / "SVM" / "scaler.joblib")
+    DIR_PATH : Path     = Path(PROJECT_ROOT / "models" / "phys_plus_theo_plus_koi" / "SVM/" )
+    MODEL_PATH : Path   = Path(DIR_PATH / "model.joblib")
+    SCALER_PATH : Path  = Path(DIR_PATH / "scaler.joblib")
 
     features = [
     "phys_duration_residual",
     "phys_depth_residual",
     "phys_impact_parameter_squared",
-    "theo_duration",
-    "theo_radius_ratio"
-    ] 
+    "koi_duration",
+    "theo_radius_ratio",
+    "koi_insol",
+    "koi_teq",
+    ]
     
-    main(MODEL_PATH, SCALER_PATH, features)
+    main(MODEL_PATH, SCALER_PATH, features, True)
