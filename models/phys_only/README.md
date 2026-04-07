@@ -1,11 +1,18 @@
-These models were trained on only the 3 physics-aware engineered models.
+## These models were trained on only the 3 physics-aware engineered models.
+`phys_duration_residual`
+`phys_depth_residual`
+`phys_impact_parameter_squared`
 
+<<<<<<< HEAD
 features = [
         "phys_duration_residual",
         "phys_depth_residual",
         "phys_impact_parameter_squared",
     ]
 
+=======
+### SVM Results
+>>>>>>> dada26c1a1ec0bf3b2210941a801764b98d900c5
 We see that while precision is very high (0.98), recall is very low (0.22).
 
 Accuracy: 0.6553
