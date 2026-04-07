@@ -133,10 +133,10 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     R_earth_to_sun = 0.009158
 
     # Compute theoretical depth (ppm)
-    df['theo_depth'] = ((df['koi_prad'] * R_earth_to_sun) / df['koi_srad'])**2 * 1e6
+    df['theo_theoretical_depth'] = ((df['koi_prad'] * R_earth_to_sun) / df['koi_srad'])**2 * 1e6
 
     # Compute residue
-    df['phys_depth_residual'] = (df['koi_depth'] - df['theo_depth']).abs()
+    df['phys_depth_residual'] = (df['koi_depth'] - df['theo_theoretical_depth']).abs()
 
     """
     2) Duration Consistency Anchoring
@@ -145,10 +145,10 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     Rstar_by_AU_ratio = R_SUN / AU_UNIT
 
     # Theoretical Anchor
-    df["theo_theoretical_duration"] = (2 * df["koi_srad"] * df["koi_period"]) / (2 * np.pi * df["phys_sma"]) * Rstar_by_AU_ratio
+    df["theo_duration"] = (2 * df["koi_srad"] * df["koi_period"]) / (2 * np.pi * df["phys_sma"]) * Rstar_by_AU_ratio
 
     # Compute residue
-    df["phys_duration_residual"] = (df["koi_duration"] - df["theo_theoretical_duration"]).abs()
+    df["phys_duration_residual"] = (df["koi_duration"] - df["theo_duration"]).abs()
 
     """
     3) Impact Parameter Consistency
