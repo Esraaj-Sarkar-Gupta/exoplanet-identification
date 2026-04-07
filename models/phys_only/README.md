@@ -3,16 +3,13 @@
 `phys_depth_residual`
 `phys_impact_parameter_squared`
 
-<<<<<<< HEAD
 features = [
         "phys_duration_residual",
         "phys_depth_residual",
         "phys_impact_parameter_squared",
     ]
 
-=======
 ### SVM Results
->>>>>>> dada26c1a1ec0bf3b2210941a801764b98d900c5
 We see that while precision is very high (0.98), recall is very low (0.22).
 
 Accuracy: 0.6553
@@ -40,3 +37,52 @@ for more context on this).
 TODO:
 	> Observe results from the random forest classifier.
 	> Attempt to add features that can explain negatives.
+
+### Random Forest Classifier Results
+
+#### Run 1
+rf_model = RandomForestClassifier(
+    n_estimators=100,   # Number of trees in the forest
+    n_jobs=-1,          # Uses all available CPU cores for speed
+    random_state=24     # My birthday is the 24th of February!
+)
+
+Accuracy: 0.9067
+
+Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.93      0.85      0.89       824
+         1.0       0.89      0.95      0.92      1105
+
+    accuracy                           0.91      1929
+   macro avg       0.91      0.90      0.90      1929
+weighted avg       0.91      0.91      0.91      1929
+
+Confusion Matrix:
+[[ 697  127]
+ [  53 1052]]
+
+#### Run 2
+
+rf_model = RandomForestClassifier(
+    n_estimators=1000,   # Number of trees in the forest
+    n_jobs=-1,          # Uses all available CPU cores for speed
+    random_state=24     # My birthday is the 24th of February!
+)
+
+Accuracy: 0.9082
+
+Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.93      0.85      0.89       824
+         1.0       0.89      0.95      0.92      1105
+
+    accuracy                           0.91      1929
+   macro avg       0.91      0.90      0.91      1929
+weighted avg       0.91      0.91      0.91      1929
+
+Confusion Matrix:
+[[ 698  126]
+ [  51 1054]]
