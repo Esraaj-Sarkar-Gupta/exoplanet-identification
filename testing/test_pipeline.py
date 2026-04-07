@@ -20,9 +20,10 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 SRC_DIR = PROJECT_ROOT / "src"
 
 sys.path.append(str(SRC_DIR))
-from model_inference import get_svm_predictions
+from model_inference import get_predictions
 
-def main():
+
+def main(model_path : Path, scaler_path : Path, features : list):
     # ---- Secure Path Resolution ---- #
     SCRIPT_DIR = Path(__file__).resolve().parent
     PROJECT_ROOT = SCRIPT_DIR.parent
@@ -53,9 +54,14 @@ def main():
 
     # ---- Run Inference ---- #
     print("Running raw data through the SVM Inference Engine...")
-    # Note: get_svm_predictions handles all the physics engineering internally!
+    # Note: get_svm_predictions handles all the physics engineering internally
     try:
-        predictions = get_svm_predictions(raw_data=df_test_clean)
+        predictions = get_predictions(
+            raw_data=df_test_clean,
+            model_path = model_path,
+            scaler_path = scaler_path,
+            features = features
+            )
     except ValueError as e:
         print(f"Inference Error: {e}")
         return
@@ -65,7 +71,7 @@ def main():
 
     # ---- Performance Metrics ---- #
     print("\n" + "="*40)
-    print("SVM TEST PERFORMANCE METRICS")
+    print(f"{MODEL_PATH} TEST PERFORMANCE METRICS")
     print("="*40)
     
     acc = accuracy_score(y_test, predictions)
@@ -78,4 +84,15 @@ def main():
     print(confusion_matrix(y_test, predictions))
 
 if __name__ == "__main__":
-    main()
+    MODEL_PATH : Path   = Path(PROJECT_ROOT / "models" / "phys_plus_theo" / "SVM" / "model.joblib")
+    SCALER_PATH : Path  = Path(PROJECT_ROOT / "models" / "phys_plus_theo" / "SVM" / "scaler.joblib")
+
+    features = [
+    "phys_duration_residual",
+    "phys_depth_residual",
+    "phys_impact_parameter_squared",
+    "theo_duration",
+    "theo_radius_ratio"
+    ] 
+    
+    main(MODEL_PATH, SCALER_PATH, features)

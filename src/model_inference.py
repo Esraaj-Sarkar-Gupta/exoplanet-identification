@@ -175,7 +175,8 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
 def get_predictions(
         raw_data: Union[pd.DataFrame, np.ndarray], 
         model_path: Path,
-        scaler_path: Path
+        scaler_path: Path,
+        features : list[str]
 ):
     """
     Takes raw dataframe, calculates physics features, loads the trained model and scaler, 
@@ -183,13 +184,6 @@ def get_predictions(
     """
     
     df_engineered = engineer_physics_features(raw_data)
-    
-    # Define features to be passed for testing
-    features = [
-        "phys_duration_residual",
-        "phys_depth_residual",
-        "phys_impact_parameter_squared",
-    ]
     
     X_features = df_engineered[features]
 
