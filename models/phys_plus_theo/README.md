@@ -8,6 +8,8 @@ features = [
     "theo_radius_ratio"
 ]
 
+### SVM Results
+
 Accuracy: 0.8310
 
 Classification Report:
@@ -23,3 +25,53 @@ weighted avg       0.86      0.83      0.82      1929
 Confusion Matrix:
 [[ 523  301]
  [  25 1080]]
+
+
+### Random Forest Results
+
+#### Run 1
+rf_model = RandomForestClassifier(
+    n_estimators=100,   # Number of trees in the forest
+    n_jobs=-1,          # Uses all available CPU cores for speed
+    random_state=24     # My birthday is the 24th of February!
+)
+
+Accuracy: 0.9150
+
+Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.93      0.86      0.90       824
+         1.0       0.90      0.95      0.93      1105
+
+    accuracy                           0.91      1929
+   macro avg       0.92      0.91      0.91      1929
+weighted avg       0.92      0.91      0.91      1929
+
+Confusion Matrix:
+[[ 712  112]
+ [  52 1053]]
+
+#### Run 2
+
+rf_model = RandomForestClassifier(
+    n_estimators=1000,   # Number of trees in the forest
+    n_jobs=-1,          # Uses all available CPU cores for speed
+    random_state=24     # My birthday is the 24th of February!
+)
+
+Accuracy: 0.9155
+
+Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.93      0.87      0.90       824
+         1.0       0.90      0.95      0.93      1105
+
+    accuracy                           0.92      1929
+   macro avg       0.92      0.91      0.91      1929
+weighted avg       0.92      0.92      0.92      1929
+
+Confusion Matrix:
+[[ 713  111]
+ [  52 1053]]
