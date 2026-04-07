@@ -1,6 +1,14 @@
 These models were trained on only the 3 physics-aware engineered models.
 
+features = [
+        "phys_duration_residual",
+        "phys_depth_residual",
+        "phys_impact_parameter_squared",
+    ]
+
 We see that while precision is very high (0.98), recall is very low (0.22).
+
+Accuracy: 0.6553
 
 Classification Report:
               precision    recall  f1-score   support
