@@ -2,7 +2,6 @@
 
 ### Selected Features
 
-$$
 \begin{array}{l}
 \hline
 \textbf{Feature Name} \\
@@ -19,16 +18,15 @@ $$
 \text{phys\_impact\_parameter\_squared} \\
 \hline
 \end{array}
-$$
-*(Note: Commented-out features from the original list were excluded)*
+
 
 ### Model Parameters
 
-| Parameter | Value | Description |
-| :--- | :--- | :--- |
-| `n_estimators` | 1000 | Number of trees in the forest |
-| `n_jobs` | -1 | Uses all available CPU cores for speed |
-| `random_state` | 24 | My birthday is the 24th of February! |
+| Parameter | Value |
+| :--- | :--- |
+| `n_estimators` | 1000 |
+| `n_jobs` | -1 |
+| `random_state` | 24 |
 
 ### RFC Results
 
