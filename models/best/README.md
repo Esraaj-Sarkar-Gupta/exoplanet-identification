@@ -14,7 +14,7 @@ features = [
     "phys_duration_residual",
     "phys_impact_parameter_squared"
 ]
-``
+```
 
 ### Model Parameters
 
