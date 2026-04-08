@@ -133,10 +133,10 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     R_earth_to_sun = 0.009158
 
     # Compute theoretical depth (ppm)
-    df['theo_theoretical_depth'] = ((df['koi_prad'] * R_earth_to_sun) / df['koi_srad'])**2 * 1e6
+    df['theo_depth'] = ((df['koi_prad'] * R_earth_to_sun) / df['koi_srad'])**2 * 1e6
 
     # Compute residue
-    df['phys_depth_residual'] = (df['koi_depth'] - df['theo_theoretical_depth']).abs()
+    df['phys_depth_residual'] = (df['koi_depth'] - df['theo_depth']).abs()
 
     """
     2) Duration Consistency Anchoring
@@ -168,7 +168,18 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     df["phys_impact_parameter_squared"] = (1 + df["theo_radius_ratio"])**2 - \
         (df["koi_duration"] * np.pi * df["theo_distance_ratio"] / (df["koi_period"] * HOURS_PER_DAY))**2
 
-    # BRIDGING FIX 1: You must return the updated dataframe!
+
+    """
+    4) Thermal Consistency Anchoring
+    (Stepahn Boltzman)
+    """
+
+    EARTH_TEQ = 255     # K
+
+    df["phys_thermal"] = (df["koi_insol"] / (df["koi_teq"] / 255)**4)
+    df["phys_thermal_residual"] = 1 - df["phys_thermal"]
+
+    # Return everything
     return df
 
 
