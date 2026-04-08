@@ -48,6 +48,41 @@ features = [
 
 ---
 
+==================================================
+OVERALL K-FOLD RESULTS (k=10)
+==================================================
+Mean Accuracy: 0.9550 (+/- 0.0066)
+Mean PR-AUC:   0.9913 (+/- 0.0027)
+==================================================
+
+With the added fourth anchor `phys_thermal_residual` that utilizes the native KOI thermal features `koi_teq` and `koi_insol`, in place of the two features, performance improves further.
+
+NOTE: Without removing the two native features, a difference of 0.0001 is observed.
+
+```python
+
+features = [
+        "koi_period",
+        "koi_model_snr",
+        "koi_prad",
+        "koi_steff",
+        "koi_srad",
+        "phys_depth_residual",
+        "phys_duration_residual",
+        "phys_impact_parameter_squared",
+        "phys_thermal_residual"
+    ]
+```
+
+==================================================
+OVERALL K-FOLD RESULTS (k=10)
+==================================================
+Mean Accuracy: 0.9537 (+/- 0.0063)
+
+Mean PR-AUC:   0.9917 (+/- 0.0020)
+================================================== 
+
+
 ## Ablation Study: Purely using KOI Features (RFC)
 
 ### Selected Features
@@ -67,7 +102,7 @@ features = [
 ]
 ```
 
-### RFC Results
+### RFC Results (Ablation)
 
 **Accuracy:** 0.9393  
 **PR-AUC Score:** 0.988651  
