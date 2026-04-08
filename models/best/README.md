@@ -81,7 +81,8 @@ features = [
 **PR-AUC Score:** 0.988651  
 
 **Classification Report:**
-$$
+
+```math
 \begin{array}{lcccc}
 \hline
 \text{Class} & \text{Precision} & \text{Recall} & \text{F1-Score} & \text{Support} \\
@@ -94,12 +95,10 @@ $$
 \text{Weighted Avg} & 0.94 & 0.94 & 0.94 & 1929 \\
 \hline
 \end{array}
-$$
+```
 
 **Confusion Matrix:**
-$$
 \begin{bmatrix}
 749 & 75 \\
 42 & 1063
 \end{bmatrix}
-$$
