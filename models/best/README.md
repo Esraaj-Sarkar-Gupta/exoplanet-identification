@@ -31,28 +31,20 @@ features = [
 
 **Classification Report:**
 
-$$
-\begin{array}{lcccc}
-\hline
-\text{Class} & \text{Precision} & \text{Recall} & \text{F1-Score} & \text{Support} \\
-\hline
-0.0 & 0.95 & 0.92 & 0.93 & 824 \\
-1.0 & 0.94 & 0.97 & 0.95 & 1105 \\
-\hline
-\text{Accuracy} & & & 0.94 & 1929 \\
-\text{Macro Avg} & 0.95 & 0.94 & 0.94 & 1929 \\
-\text{Weighted Avg} & 0.94 & 0.94 & 0.94 & 1929 \\
-\hline
-\end{array}
-$$
+| Class | Precision | Recall | F1-Score | Support |
+| :--- | :--- | :--- | :--- | :--- |
+| **0.0** | 0.95 | 0.92 | 0.93 | 824 |
+| **1.0** | 0.94 | 0.97 | 0.95 | 1105 |
+| **Accuracy** | | | 0.94 | 1929 |
+| **Macro Avg** | 0.95 | 0.94 | 0.94 | 1929 |
+| **Weighted Avg** | 0.94 | 0.94 | 0.94 | 1929 |
 
 **Confusion Matrix:**
-$$
-\begin{bmatrix}
-754 & 70 \\
-38 & 1067
-\end{bmatrix}
-$$
+
+| | Predicted 0.0 | Predicted 1.0 |
+| :--- | :--- | :--- |
+| **Actual 0.0** | 754 | 70 |
+| **Actual 1.0** | 38 | 1067 |
 
 ---
 
@@ -82,23 +74,17 @@ features = [
 
 **Classification Report:**
 
-```math
-\begin{array}{lcccc}
-\hline
-\text{Class} & \text{Precision} & \text{Recall} & \text{F1-Score} & \text{Support} \\
-\hline
-0.0 & 0.95 & 0.91 & 0.93 & 824 \\
-1.0 & 0.93 & 0.96 & 0.95 & 1105 \\
-\hline
-\text{Accuracy} & & & 0.94 & 1929 \\
-\text{Macro Avg} & 0.94 & 0.94 & 0.94 & 1929 \\
-\text{Weighted Avg} & 0.94 & 0.94 & 0.94 & 1929 \\
-\hline
-\end{array}
-```
+| Class | Precision | Recall | F1-Score | Support |
+| :--- | :--- | :--- | :--- | :--- |
+| **0.0** | 0.95 | 0.91 | 0.93 | 824 |
+| **1.0** | 0.93 | 0.96 | 0.95 | 1105 |
+| **Accuracy** | | | 0.94 | 1929 |
+| **Macro Avg** | 0.94 | 0.94 | 0.94 | 1929 |
+| **Weighted Avg** | 0.94 | 0.94 | 0.94 | 1929 |
 
 **Confusion Matrix:**
-\begin{bmatrix}
-749 & 75 \\
-42 & 1063
-\end{bmatrix}
+
+| | Predicted 0.0 | Predicted 1.0 |
+| :--- | :--- | :--- |
+| **Actual 0.0** | 749 | 75 |
+| **Actual 1.0** | 42 | 1063 |
