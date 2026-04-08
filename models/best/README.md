@@ -1,25 +1,20 @@
 ## Best Model (So Far): Physics-Informed RFC
 
 ### Selected Features
-
-$$
-\begin{array}{l}
-\hline
-\textbf{Feature Name} \\
-\hline
-\text{koi\_period} \\
-\text{koi\_model\_snr} \\
-\text{koi\_prad} \\
-\text{koi\_teq} \\
-\text{koi\_insol} \\
-\text{koi\_steff} \\
-\text{koi\_srad} \\
-\text{phys\_depth\_residual} \\
-\text{phys\_duration\_residual} \\
-\text{phys\_impact\_parameter\_squared} \\
-\hline
-\end{array}
-$$
+```python=
+features = [
+    "koi_period",
+    "koi_model_snr",
+    "koi_prad",
+    "koi_teq",
+    "koi_insol",
+    "koi_steff",
+    "koi_srad",
+    "phys_depth_residual",
+    "phys_duration_residual",
+    "phys_impact_parameter_squared"
+]
+``
 
 ### Model Parameters
 
@@ -65,24 +60,20 @@ $$
 
 ### Selected Features
 
-$$
-\begin{array}{l}
-\hline
-\textbf{Feature Name} \\
-\hline
-\text{koi\_period} \\
-\text{koi\_duration} \\
-\text{koi\_depth} \\
-\text{koi\_model\_snr} \\
-\text{koi\_prad} \\
-\text{koi\_teq} \\
-\text{koi\_insol} \\
-\text{koi\_steff} \\
-\text{koi\_slogg} \\
-\text{koi\_srad} \\
-\hline
-\end{array}
-$$
+```python
+features = [
+    "koi_period",
+    "koi_duration",
+    "koi_depth",
+    "koi_model_snr",
+    "koi_prad",
+    "koi_teq",
+    "koi_insol",
+    "koi_steff",
+    "koi_slogg",
+    "koi_srad"
+]
+```
 
 ### RFC Results
 
