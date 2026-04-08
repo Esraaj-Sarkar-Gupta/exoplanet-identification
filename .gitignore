@@ -1,0 +1,18 @@
+# Ignore all images
+*.png
+*.jpeg
+*.jpg
+
+# Ignore auxillary files from LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.gz
+*.log
+
+# Ignore Cpython files
+*.cpython-311
+src/__pycache__/model_inference.cpython-311.pyc
+src/__pycache__/model_inference.cpython-313.pyc
+results.txt
