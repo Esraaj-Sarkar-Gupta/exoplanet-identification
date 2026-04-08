@@ -33,7 +33,7 @@ def main(model_path : Path, scaler_path : Path, features : list, return_probs : 
     # ---- Secure Path Resolution ---- #
     SCRIPT_DIR = Path(__file__).resolve().parent
     PROJECT_ROOT = SCRIPT_DIR.parent
-    DATA_PATH = PROJECT_ROOT / "data" / "processed" / "cleaned_non_standardized_test.csv"
+    DATA_PATH = PROJECT_ROOT / "data" / "koi" / "train-test_split" / "cleaned_non_standardized_test.csv"
 
     # ---- Load Data ---- #
     print(f"Loading raw test data from: {DATA_PATH.name}...")
@@ -96,7 +96,7 @@ def main(model_path : Path, scaler_path : Path, features : list, return_probs : 
         precision, recall, thresholds = precision_recall_curve(y_test, positive_class_probabilities)
         pr_auc = auc(recall, precision)
         
-        print(f"PR-AUC Score: {pr_auc:.4f}\n")
+        print(f"PR-AUC Score: {pr_auc:.6f}\n")
         
         # Plot the Precision-Recall Curve
         print("Generating Precision-Recall Curve...")
@@ -116,18 +116,31 @@ def main(model_path : Path, scaler_path : Path, features : list, return_probs : 
         print(f"Plot saved successfully to: {plot_path}")
 
 if __name__ == "__main__":
-    DIR_PATH : Path     = Path(PROJECT_ROOT / "models" / "phys_plus_theo_plus_koi" / "SVM/" )
+    DIR_PATH : Path     = Path(PROJECT_ROOT / "models" / "exp" / "RFC/" )
     MODEL_PATH : Path   = Path(DIR_PATH / "model.joblib")
     SCALER_PATH : Path  = Path(DIR_PATH / "scaler.joblib")
 
     features = [
-    "phys_duration_residual",
-    "phys_depth_residual",
-    "phys_impact_parameter_squared",
-    "koi_duration",
-    "theo_radius_ratio",
-    "koi_insol",
+    "koi_period",
+    #"koi_duration",
+    #"koi_depth",
+    "koi_model_snr",
+    "koi_prad",
     "koi_teq",
-    ]
+    "koi_insol",
+    "koi_steff",
+    #"koi_slogg",
+    "koi_srad",
+    #"phys_smass",
+    #"phys_sma",
+    #"theo_depth",
+    "phys_depth_residual",
+    ##"theo_duration",
+    "phys_duration_residual",
+    #"theo_radius_ratio",
+    #"theo_distance_ratio",
+    "phys_impact_parameter_squared",
+    #"phys_thermal_residual"
+]
     
     main(MODEL_PATH, SCALER_PATH, features, True)

@@ -15,21 +15,26 @@ import joblib
 
 from pathlib import Path
 
-SAVE_DIR = Path("models/phys_plus_theo/SVM")
+SAVE_DIR = Path("models/exp/SVM")
 SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
 FILE_PATH = SAVE_DIR / 'model.joblib'
 
 # ---- Load Data ---- #
-data_path = Path("data/physics/physics_aware_features_KOI.csv")
+data_path = Path("data/koi/physics_train/physically_anchored_features_KOI.csv")
 df = pd.read_csv(data_path)
 
 features = [
-    "phys_duration_residual",
-    "phys_depth_residual",
-    "phys_impact_parameter_squared",
-    "theo_duration",
-    "theo_radius_ratio"
+    "koi_period",
+    "koi_duration",
+    "koi_depth",
+    "koi_model_snr",
+    "koi_prad",
+    "koi_teq",
+    "koi_insol",
+    "koi_steff",
+    "koi_slogg",
+    "koi_srad"
 ]
 
 X = df[features]
