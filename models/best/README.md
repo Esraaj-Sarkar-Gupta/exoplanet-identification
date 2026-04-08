@@ -2,6 +2,7 @@
 
 ### Selected Features
 
+$$
 \begin{array}{l}
 \hline
 \textbf{Feature Name} \\
@@ -18,7 +19,7 @@
 \text{phys\_impact\_parameter\_squared} \\
 \hline
 \end{array}
-
+$$
 
 ### Model Parameters
 
@@ -34,6 +35,7 @@
 **PR-AUC Score:** 0.990355  
 
 **Classification Report:**
+
 $$
 \begin{array}{lcccc}
 \hline
