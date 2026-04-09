@@ -16,3 +16,6 @@
 src/__pycache__/model_inference.cpython-311.pyc
 src/__pycache__/model_inference.cpython-313.pyc
 results.txt
+data/lightcurves.ipynb
+datalookup.ipynb
+src/gemini_markdown.py
