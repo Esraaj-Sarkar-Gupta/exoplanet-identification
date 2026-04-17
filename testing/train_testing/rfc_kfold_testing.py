@@ -26,7 +26,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if (SCRIPT_DIR / "src").exists():
     PROJECT_ROOT = SCRIPT_DIR       
 else:
-    PROJECT_ROOT = SCRIPT_DIR.parent 
+    PROJECT_ROOT = SCRIPT_DIR.parent.parent
 
 SRC_DIR = PROJECT_ROOT / "src"
 sys.path.append(str(SRC_DIR))
@@ -102,7 +102,7 @@ ablation_features = [
 def main(features, k_splits = 10):
     # ---- Load Pre-Cleaned Data ---- #
     # Pointing to the exact directory and file you configured in your notebook
-    data_path = PROJECT_ROOT / "data" / "koi" / "cleaned" / "q1_q17.csv"
+    data_path = PROJECT_ROOT / "data" / "koi" / "cleaned" / "q1_q17_koi.csv"
     print(f"Loading pre-cleaned dataset: {data_path.name}...")
     
     try:
@@ -182,20 +182,6 @@ def main(features, k_splits = 10):
     print("="*50)
 
 if __name__ == "__main__":
-    K = 100
-
-    print(f"Ablation Test: KOI ONLY...")
-    main(ablation_features,K)
-
-    print(f"Physical anchors ONLY...")
-    main(features_phys, K)
-
-    print(f"Selection 3 -- First three physical anchors...")
-    main(features_3, K)
-
-    print(f"Selection 4 -- All four anchors. Fourth anchor in place of teq and insol...")
-    main(features_4)
-
-    print(f"All features listed here...")
-    main(features_all)
-
+    main(ablation_features,5)
+    main(features_4, 5) # Best for k = 10, better Acc and same AUC for k = 5
+    main(features_3, 5)

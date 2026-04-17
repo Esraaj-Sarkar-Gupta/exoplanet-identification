@@ -1,13 +1,13 @@
 """
 Docstring for model_inference.py
 
-    1) Loads raw KOI dataset inputs
+    1) Loads raw NASA dataset inputs (KOI, TESS, K2)
     2) Computes physics-informed features
     3) Loads the trained SVM model and associated scaler from disk
     4) Applies the transformation
     5) Returns predictions
 
-    This file can run predictions for any new raw KOI data. This is
+    This file can run predictions for any new raw exoplanet data. This is
     also part of the testing pipeline, where we will run our raw test data through.
 
 Author: Esraaj Sarkar Gupta
@@ -61,15 +61,8 @@ def period_to_si(period_days: float) -> float:
 
 def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Docstring for engineer_physics_features
-
-    Computes all the derived and physics-aware features from raw
-    KOI data.
-    
-    :param df: Description
-    :type df: pd.DataFrame
-    :return: Description
-    :rtype: DataFrame
+    Computes all the derived and physics-aware features from raw data.
+    Uses 'koi_' nomenclature, with safe handling for missing K2 variables.
     """
     
     # Work on a copy to avoid SettingWithCopy warnings
@@ -79,13 +72,10 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
 
     """
     1) Stellar Mass
-
-    Newton's Law of Gravitation is used to estimate stellar mass from
-    surface gravitational acceleration and stellar radius.
     """
-    stellar_mass : list[float] = list([])
+    stellar_mass = []
 
-    for g,r in zip(df["koi_slogg"], df["koi_srad"]):
+    for g, r in zip(df["koi_slogg"], df["koi_srad"]):
         # Convert to workable units
         g_si = slogg_to_si(g)
         r_si = srad_to_si(r)
@@ -100,19 +90,16 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
     df["phys_smass"] = np.array(stellar_mass)
 
     """
-    2) Estimating the length of the semi-major axis using
-    Kepler's Third Law of planetary motion.
+    2) Estimating the length of the semi-major axis
     """
     def a_kepler(M_s, P):
         numerator   = P**2 * G_CONST * M_s
         denominator = 4 * np.pi**2
-
         return np.cbrt(numerator / denominator)
 
-    semi_major_axis : list[float] = list([])
+    semi_major_axis = []
 
-    for M_s,P in zip(df["phys_smass"], df["koi_period"]):
-
+    for M_s, P in zip(df["phys_smass"], df["koi_period"]):
         # Convert to workable units
         M_s_si = M_s * M_SUN
         P_si = period_to_si(P)
@@ -120,66 +107,62 @@ def engineer_physics_features(df: pd.DataFrame) -> pd.DataFrame:
         # Physics
         a = a_kepler(M_s_si, P_si)
         a_AU = a / AU_UNIT
-
         semi_major_axis.append(a_AU)
 
     df["phys_sma"] = np.array(semi_major_axis)
 
     # ---- Physics-Aware Features ---- #
+    
     """
     1) Transit Depth Consistency
     """
-    # Earth to Sun radius conversion constant
     R_earth_to_sun = 0.009158
-
-    # Compute theoretical depth (ppm)
     df['theo_depth'] = ((df['koi_prad'] * R_earth_to_sun) / df['koi_srad'])**2 * 1e6
 
-    # Compute residue
-    df['phys_depth_residual'] = (df['koi_depth'] - df['theo_depth']).abs()
+    # Safe residue: Leaves as NaN if raw depth is missing
+    df['phys_depth_residual'] = np.where(
+        df['koi_depth'].notna() & df['theo_depth'].notna(),
+        (df['koi_depth'] - df['theo_depth']).abs(),
+        np.nan
+    )
 
     """
     2) Duration Consistency Anchoring
     """
-    # Unit conversion ratio
     Rstar_by_AU_ratio = R_SUN / AU_UNIT
-
-    # Theoretical Anchor
     df["theo_duration"] = (2 * df["koi_srad"] * df["koi_period"]) / (2 * np.pi * df["phys_sma"]) * Rstar_by_AU_ratio
 
-    # Compute residue
-    df["phys_duration_residual"] = (df["koi_duration"] - df["theo_duration"]).abs()
+    # Safe residue: Leaves as NaN if raw duration is missing
+    df["phys_duration_residual"] = np.where(
+        df["koi_duration"].notna() & df["theo_duration"].notna(),
+        (df["koi_duration"] - df["theo_duration"]).abs(),
+        np.nan
+    )
 
     """
     3) Impact Parameter Consistency
     """
-
-    # Unit Conversion Ratios
     AU_by_Rstar_ratio = AU_UNIT / R_SUN
     Rearth_by_Rstar_ratio = R_EARTH / R_SUN
 
-    # Radius Ratio
     df["theo_radius_ratio"] = df["koi_prad"] / df["koi_srad"] * Rearth_by_Rstar_ratio 
-
-    # Distance Ratio
     df["theo_distance_ratio"] = df["phys_sma"] / df["koi_srad"] * AU_by_Rstar_ratio
 
-    # Compute impact parameter
-    df["phys_impact_parameter_squared"] = (1 + df["theo_radius_ratio"])**2 - \
-        (df["koi_duration"] * np.pi * df["theo_distance_ratio"] / (df["koi_period"] * HOURS_PER_DAY))**2
-
+    # Safe impact parameter: Leaves as NaN if duration is missing
+    df["phys_impact_parameter_squared"] = np.where(
+        df["koi_duration"].notna(),
+        (1 + df["theo_radius_ratio"])**2 - \
+        (df["koi_duration"] * np.pi * df["theo_distance_ratio"] / (df["koi_period"] * HOURS_PER_DAY))**2,
+        np.nan
+    )
 
     """
     4) Thermal Consistency Anchoring
-    (Stepahn Boltzman)
     """
-
     EARTH_TEQ = 255     # K
-
-    df["phys_thermal"] = (df["koi_insol"] / (df["koi_teq"] / 255)**4)
+    df["phys_thermal"] = (df["koi_insol"] / (df["koi_teq"] / EARTH_TEQ)**4)
     df["phys_thermal_residual"] = 1 - df["phys_thermal"]
 
-    # Return everything
     return df
 
 
