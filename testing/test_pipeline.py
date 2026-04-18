@@ -22,8 +22,14 @@ from sklearn.metrics import (
 
 # ---- Secure Path Resolution for Imports ---- #
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
 SRC_DIR = PROJECT_ROOT / "src"
+
+DATA_PATH = PROJECT_ROOT / "data" / "koi" / "train-test_split" / "cleaned_non_standardized_test.csv"
+
+print(f"Project Root: {PROJECT_ROOT}")
+print(f"Data: {PROJECT_ROOT / "data" / "koi" / "train-test_split" / "cleaned_non_standardized_test.csv"}")
+
 
 sys.path.append(str(SRC_DIR))
 from model_inference import get_predictions
@@ -33,10 +39,10 @@ def main(model_path : Path, scaler_path : Path, features : list, return_probs : 
     # ---- Secure Path Resolution ---- #
     SCRIPT_DIR = Path(__file__).resolve().parent
     PROJECT_ROOT = SCRIPT_DIR.parent
-    DATA_PATH = PROJECT_ROOT / "data" / "koi" / "train-test_split" / "cleaned_non_standardized_test.csv"
+    #DATA_PATH = PROJECT_ROOT / "data" / "koi" / "train-test_split" / "cleaned_non_standardized_test.csv"
 
     # ---- Load Data ---- #
-    print(f"Loading raw test data from: {DATA_PATH.name}...")
+    print(f"Loading raw test data from: {DATA_PATH}...")
     try:
         df_test = pd.read_csv(DATA_PATH)
     except FileNotFoundError:
@@ -116,21 +122,21 @@ def main(model_path : Path, scaler_path : Path, features : list, return_probs : 
         print(f"Plot saved successfully to: {plot_path}")
 
 if __name__ == "__main__":
-    DIR_PATH : Path     = Path(PROJECT_ROOT / "models" / "exp" / "RFC/" )
+    DIR_PATH : Path     = Path(PROJECT_ROOT / "models" / "phys_only" / "RFC_4/" )
     MODEL_PATH : Path   = Path(DIR_PATH / "model.joblib")
     SCALER_PATH : Path  = Path(DIR_PATH / "scaler.joblib")
 
     features = [
-    "koi_period",
+    #3"koi_period",
     #"koi_duration",
     #"koi_depth",
-    "koi_model_snr",
-    "koi_prad",
-    "koi_teq",
-    "koi_insol",
-    "koi_steff",
+    #3"koi_model_snr",
+    #3"koi_prad",
+    #3"koi_teq",
+    #3"koi_insol",
+    #3"koi_steff",
     #"koi_slogg",
-    "koi_srad",
+    #3"koi_srad",
     #"phys_smass",
     #"phys_sma",
     #"theo_depth",
@@ -140,7 +146,7 @@ if __name__ == "__main__":
     #"theo_radius_ratio",
     #"theo_distance_ratio",
     "phys_impact_parameter_squared",
-    #"phys_thermal_residual"
+    "phys_thermal_residual"
 ]
     
     main(MODEL_PATH, SCALER_PATH, features, True)
