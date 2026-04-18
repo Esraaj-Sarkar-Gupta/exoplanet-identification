@@ -220,15 +220,15 @@ if __name__ == "__main__":
     # Easily add or remove datasets here. The pipeline handles them all!
     datasets_to_test = {
         "KOI": Path(PROJECT_ROOT / "data" / "koi" / "cleaned" / "q1_q17_koi.csv"),
-        #"TESS": Path(PROJECT_ROOT / "data" / "toi" / "tois.csv"),
-        #"K2": Path(PROJECT_ROOT / "data" / "k2" / "k2pandc.csv")
+        "TESS": Path(PROJECT_ROOT / "data" / "toi" / "tois.csv"),
+        "K2": Path(PROJECT_ROOT / "data" / "k2" / "k2pandc_imputed.csv")
     }
 
     print("\n--- RUNNING ABLATION FEATURES ---")
-    main(datasets_to_test, ablation_features, 5)
+    main(datasets_to_test, ablation_features, 10)
     
     print("\n--- RUNNING FEATURES 4 ---")
-    main(datasets_to_test, features_4, 5)
+    main(datasets_to_test, features_4, 10)
     
     print("\n--- RUNNING FEATURES 3 ---")
-    main(datasets_to_test, features_3, 5)
+    main(datasets_to_test, features_3, 10)
