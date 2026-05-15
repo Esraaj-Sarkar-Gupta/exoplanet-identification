@@ -7,6 +7,9 @@
 \usepackage{hyperref}
 \usepackage{geometry}
 
+\usepackage{booktabs}
+\usepackage{multirow}
+
 \geometry{margin=1in}
 
 \setlength{\parindent}{0pt}
@@ -39,6 +42,79 @@ where $R_p$ is the radius of the planet and $R_*$ is the radius of the star. We 
 
 
 \subsection{Impact Parameter}
+
+\section{Results}
+
+\begin{table}[h]
+\centering
+\caption{10-Fold Stratified Cross-Validation Results by Dataset and Feature Set. Note: KOI and TESS utilized complete cases, while K2 utilized KNN-imputed data.}
+\label{tab:cv_results_full}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Dataset} & \textbf{Feature Set} & \textbf{Mean Accuracy} & \textbf{Mean PR-AUC} \\
+\midrule
+\multirow{3}{*}{KOI (k=10)}
+& Ablation Features & $0.9467 \pm 0.0074$ & $0.9905 \pm 0.0019$ \\
+& Features 3 & $0.9550 \pm 0.0066$ & $0.9913 \pm 0.0027$ \\
+& Features 4 & $0.9544 \pm 0.0064$ & $0.9918 \pm 0.0023$ \\
+\midrule
+\multirow{3}{*}{TESS (k=10)}
+& Ablation Features & $0.8481 \pm 0.0082$ & $0.5729 \pm 0.0405$ \\
+& Features 3 & $0.8477 \pm 0.0107$ & $0.5774 \pm 0.0491$ \\
+& Features 4 & $0.8478 \pm 0.0126$ & $0.5933 \pm 0.0451$ \\
+\midrule
+\multirow{3}{*}{K2 Imputed (k=10)}
+& Ablation Features & $0.7948 \pm 0.0239$ & $0.9022 \pm 0.0149$ \\
+& Features 3 & $0.7948 \pm 0.0275$ & $0.8957 \pm 0.0118$ \\
+& Features 4 & $0.7879 \pm 0.0290$ & $0.8855 \pm 0.0148$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\caption{K2 Dataset Performance: Native NaN Handling vs. KNN Imputation (10-Fold CV)}
+\label{tab:k2_missing_data}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Model \& Data Strategy} & \textbf{Feature Set} & \textbf{Mean Accuracy} & \textbf{Mean PR-AUC} \\
+\midrule
+\multirow{3}{*}{HistGB (Native NaN)}
+& Ablation Features & $0.8380 \pm 0.0174$ & $0.9375 \pm 0.0096$ \\
+& Features 3 & $0.8246 \pm 0.0161$ & $0.9297 \pm 0.0104$ \\
+& Features 4 & $0.8102 \pm 0.0181$ & $0.9046 \pm 0.0184$ \\
+\midrule
+\multirow{3}{*}{RandomForest (Imputed)}
+& Ablation Features & $0.7963 \pm 0.0241$ & $0.9022 \pm 0.0167$ \\
+& Features 3 & $0.7971 \pm 0.0291$ & $0.8962 \pm 0.0168$ \\
+& Features 4 & $0.7946 \pm 0.0277$ & $0.8870 \pm 0.0197$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{TESS Dataset Performance: Native NaN Handling vs. KNN Imputation (10-Fold CV)}
+\label{tab:tess_missing_data}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Model \& Data Strategy} & \textbf{Feature Set} & \textbf{Mean Accuracy} & \textbf{Mean PR-AUC} \\
+\midrule
+\multirow{3}{*}{HistGB (Native NaN)}
+& Ablation Features & $0.8575 \pm 0.0126$ & $0.5543 \pm 0.0493$ \\
+& Features 3 & $0.8602 \pm 0.0108$ & $0.5569 \pm 0.0496$ \\
+& Features 4 & $0.8609 \pm 0.0083$ & $0.5591 \pm 0.0404$ \\
+\midrule
+\multirow{3}{*}{RandomForest (Imputed)}
+& Ablation Features & $0.8590 \pm 0.0113$ & $0.5445 \pm 0.0471$ \\
+& Features 3 & $0.8602 \pm 0.0091$ & $0.5431 \pm 0.0457$ \\
+& Features 4 & $0.8610 \pm 0.0076$ & $0.5608 \pm 0.0430$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Might want to discuss the limitations of imputation in
 
 
 
