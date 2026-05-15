@@ -1,0 +1,61 @@
+================================================================================
+K2 DATA MACHINE LEARNING MODEL PERFORMANCE REPORT
+================================================================================
+
+1. FEATURE SET: PURELY DATA DRIVEN (ABLATION)
+--------------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.6996 (+/- 0.0272)
+- Mean PR-AUC:   0.7710 (+/- 0.0329)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.75022
+- Fold 2:  0.66406
+- Fold 3:  0.77730
+- Fold 4:  0.75962
+- Fold 5:  0.71421
+- Fold 6:  0.75765
+- Fold 7:  0.75757
+- Fold 8:  0.76890
+- Fold 9:  0.75492
+- Fold 10: 0.75386
+
+2. FEATURE SET: ONLY ANCHORED FEATURES
+--------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.6857 (+/- 0.0183)
+- Mean PR-AUC:   0.7502 (+/- 0.0212)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.72804
+- Fold 2:  0.69610
+- Fold 3:  0.76149
+- Fold 4:  0.72918
+- Fold 5:  0.69785
+- Fold 6:  0.74913
+- Fold 7:  0.70735
+- Fold 8:  0.76221
+- Fold 9:  0.68136
+- Fold 10: 0.73125
+
+3. FEATURE SET: BEST COMBINED (FEATURES 4)
+------------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.6825 (+/- 0.0290)
+- Mean PR-AUC:   0.7518 (+/- 0.0212)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.74813
+- Fold 2:  0.67459
+- Fold 3:  0.75520
+- Fold 4:  0.74088
+- Fold 5:  0.70680
+- Fold 6:  0.76175
+- Fold 7:  0.72518
+- Fold 8:  0.76723
+- Fold 9:  0.69451
+- Fold 10: 0.75560
+
+================================================================================
+REPORT END
+================================================================================

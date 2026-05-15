@@ -1,0 +1,61 @@
+================================================================================
+KOI DATA MACHINE LEARNING MODEL PERFORMANCE REPORT
+================================================================================
+
+1. FEATURE SET: PURELY DATA DRIVEN (ABLATION)
+--------------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.8141 (+/- 0.1128)
+- Mean PR-AUC:   0.9430 (+/- 0.0065)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.94850
+- Fold 2:  0.95384
+- Fold 3:  0.94097
+- Fold 4:  0.94670
+- Fold 5:  0.94558
+- Fold 6:  0.93574
+- Fold 7:  0.94296
+- Fold 8:  0.95280
+- Fold 9:  0.94188
+- Fold 10: 0.93382
+
+2. FEATURE SET: ONLY ANCHORED FEATURES
+--------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.4650 (+/- 0.0850)
+- Mean PR-AUC:   0.7995 (+/- 0.0502)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.75001
+- Fold 2:  0.79471
+- Fold 3:  0.80483
+- Fold 4:  0.81067
+- Fold 5:  0.82189
+- Fold 6:  0.87378
+- Fold 7:  0.84407
+- Fold 8:  0.82534
+- Fold 9:  0.80980
+- Fold 10: 0.85169
+
+3. FEATURE SET: BEST COMBINED (FEATURES 4)
+------------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.7377 (+/- 0.1670)
+- Mean PR-AUC:   0.9178 (+/- 0.0199)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.93213
+- Fold 2:  0.92610
+- Fold 3:  0.91745
+- Fold 4:  0.93983
+- Fold 5:  0.92273
+- Fold 6:  0.95992
+- Fold 7:  0.92913
+- Fold 8:  0.93015
+- Fold 9:  0.94171
+- Fold 10: 0.90531
+
+================================================================================
+REPORT END
+================================================================================

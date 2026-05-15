@@ -1,0 +1,61 @@
+================================================================================
+PHYSICS-AWARE MACHINE LEARNING MODEL PERFORMANCE REPORT
+================================================================================
+
+1. FEATURE SET: PURELY DATA DRIVEN (ABLATION)
+--------------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.8467 (+/- 0.0062)
+- Mean PR-AUC:   0.4824 (+/- 0.0423)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.82537
+- Fold 2:  0.78146
+- Fold 3:  0.80885
+- Fold 4:  0.78424
+- Fold 5:  0.82982
+- Fold 6:  0.79314
+- Fold 7:  0.82251
+- Fold 8:  0.79299
+- Fold 9:  0.81637
+- Fold 10: 0.83183
+
+2. FEATURE SET: ONLY ANCHORED FEATURES
+--------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.8346 (+/- 0.0004)
+- Mean PR-AUC:   0.3067 (+/- 0.0287)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.71923
+- Fold 2:  0.70731
+- Fold 3:  0.69048
+- Fold 4:  0.69207
+- Fold 5:  0.66605
+- Fold 6:  0.70229
+- Fold 7:  0.69894
+- Fold 8:  0.73299
+- Fold 9:  0.69697
+- Fold 10: 0.73366
+
+3. FEATURE SET: BEST COMBINED (FEATURES 4)
+------------------------------------------
+Summary Statistics:
+- Mean Accuracy: 0.8448 (+/- 0.0077)
+- Mean PR-AUC:   0.4749 (+/- 0.0300)
+
+Detailed Folds (Best Valid AUC per fold):
+- Fold 1:  0.82466
+- Fold 2:  0.78431
+- Fold 3:  0.80425
+- Fold 4:  0.78893
+- Fold 5:  0.81836
+- Fold 6:  0.79203
+- Fold 7:  0.83392
+- Fold 8:  0.81000
+- Fold 9:  0.79365
+- Fold 10: 0.84144
+
+================================================================================
+REPORT END
+================================================================================
